@@ -17,6 +17,7 @@ def net_transaction(key, value):
         "net_transactions": value
     }
     return output
+
 def ledger(transactions):
     accounts = {}
     for trx in transactions:
@@ -35,7 +36,7 @@ def ledger(transactions):
                 accounts[rname] = 0
             accounts[rname] += int(trx["amount"])
             accounts[oname] -= int(trx["amount"])
-    output = [net_transaction(key, value) for (key, value) in accounts.iteritems()]
+    output = [net_transaction(key, value) for (key, value) in accounts.iteritems() if value != 0]
     return output
 
 def main():
