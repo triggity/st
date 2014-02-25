@@ -7,7 +7,7 @@ Originator: 111222333 / 9991
 Recipient: 444555666 / 123456
 Type: Credit
 Amount: 10000
-==  
+==
 Transaction: 302
 Originator: 111222333 / 9991
 Recipient: 123456789 / 55550
@@ -19,4 +19,4 @@ Originator: 111222333 / 9992
 Recipient: 444555666 / 8675309
 Type: Debit
 Amount: 999
-==  
+==
