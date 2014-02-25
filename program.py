@@ -6,7 +6,7 @@ import parsebdi
 pp = pprint.PrettyPrinter()
 
 def unique_name(routing, acct):
-    return routing + acct
+    return "{}{}".format(routing, acct)
 def unique_to_parts(name):
     return name[:9], name[9:]
 def net_transaction(key, value):
@@ -47,7 +47,6 @@ def main():
         "description": dicted["description"],
         "accounts": net
     }
-    pp.pprint(output)
     return output
 
 
