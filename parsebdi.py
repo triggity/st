@@ -5,7 +5,7 @@ import pprint
 
 pp = pprint.PrettyPrinter()
 
-def split_on_first_transaction(into):
+def split_on_transaction(into):
     return into.split("==")
 
 def to_string():
@@ -30,7 +30,7 @@ def to_dict():
     output = {}
     if not buffer:
         return
-    split = split_on_first_transaction(buffer) 
+    split = split_on_transaction(buffer) 
     headers = process_headers(split[0])
     transactions = [process_transactions(i) for i in split[1:]]
     output.update(headers)

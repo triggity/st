@@ -10,9 +10,7 @@ pp = pprint.PrettyPrinter()
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 splits = ['/*BDI*/\nBatch: 99\nDescription: Payroll for January\n', '\nTransaction: 301\nOriginator: 111222333 / 9991\nRecipient: 444555666 / 123456\nType: Credit\nAmount: 10000\n', '\nTransaction: 302\nOriginator: 111222333 / 9991\nRecipient: 123456789 / 55550\nType: Credit\nAmount: 380100\n', '\nTransaction: 305\nOriginator: 111222333 / 9992\nRecipient: 444555666 / 8675309\nType: Debit\nAmount: 999\n', '\n']
-def splitgen():
-    for i in splits:
-        yield i
+
 header_dict = {
     "batch": "99",
     "description": "Payroll for January"
@@ -28,9 +26,12 @@ class parseBDI(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def mock_input(self):
+        for line in self.sample:
+            yield line
     def test_split_on_first_transaction(self):
         expected = splits
-        result = parsebdi.split_on_first_transaction(self.sample)
+        result = parsebdi.split_on_transaction(self.sample)
         self.assertEqual(result, expected)
 
     def test_process_headers(self):
@@ -45,9 +46,21 @@ class parseBDI(unittest.TestCase):
 
     @patch("fileinput.input")
     def test_to_dict(self, mockinput):
-        mockinput.return_value = splitgen() 
+        mockinput.return_value = self.mock_input() 
         expected = {}
         expected.update(header_dict)
         expected.update({"transactions": transactions})
         result = parsebdi.to_dict()
         self.assertEqual(result, expected)
+
+    @patch("fileinput.input")
+    def test_to_string(self, mockinput):
+        mockinput.return_value = self.mock_input() 
+        expected = self.sample
+        result = parsebdi.to_string()
+        self.assertEqual(result, expected)
+
+
+
+
+
